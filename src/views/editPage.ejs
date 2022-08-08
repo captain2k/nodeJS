@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit page</title>
+</head>
+<body>
+    <form action="/edit-user/<%= userDetail.id %>" method="POST">
+        <label >First name:</label><br>
+        <input type="text" name="firstName" value="<%= userDetail.firstName %>" ><br>
+        <label >Last name:</label><br>
+        <input type="text" name="lastName" value="<%= userDetail.lastName %>" ><br>
+        <label >Email:</label><br>
+        <input type="email" name="email" value="<%= userDetail.email %>" ><br>
+        <label >Address:</label><br>
+        <input type="text" name="adress" value="<%= userDetail.adress %>"><br><br>
+        <button type="submit">Save</button>
+    </form> 
+</body>
+</html>
