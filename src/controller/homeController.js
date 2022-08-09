@@ -15,12 +15,12 @@ export async function detailController(req, res) {
 }
 
 export async function createUserController(req, res) {
-  const { firstName, lastName, email, adress } = req.body;
+  const { firstName, lastName, email, address } = req.body;
   await pool.execute(
-    "INSERT INTO users (firstName, lastName, email, adress) VALUES (?, ?, ?, ?)",
-    [firstName, lastName, email, adress]
+    "INSERT INTO users (firstName, lastName, email, address) VALUES (?, ?, ?, ?)",
+    [firstName, lastName, email, address]
   );
-
+ 
   return res.redirect("/");
 }
 
@@ -41,10 +41,10 @@ export async function getDetailUserController(req, res) {
 
 export async function updateUserController(req, res) {
   const { userId } = req.params;
-  const { firstName, lastName, email, adress } = req.body;
+  const { firstName, lastName, email, address } = req.body;
   await pool.execute(
-    "update users set firstName = ?, lastName = ?, email = ?, adress = ? where id = ?",
-    [firstName, lastName, email, adress, userId]
+    "update users set firstName = ?, lastName = ?, email = ?, address = ? where id = ?",
+    [firstName, lastName, email, address, userId]
   );
 
   return res.redirect("/");
