@@ -49,3 +49,13 @@ export async function updateUserController(req, res) {
 
   return res.redirect("/");
 }
+
+export function uploadPageController(req,res) {
+  return res.render('uploadPage.ejs')
+}
+
+export function uploadController(req, res) {
+  const avatarFile = req.file
+  console.log(avatarFile);
+  return res.send(`<img width=300 src='./uploads/banana.jpg' />`)
+}

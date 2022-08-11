@@ -6,7 +6,21 @@ import {
   deleteUserController,
   getDetailUserController,
   updateUserController,
+  uploadController,
+  uploadPageController
 } from "../controller/homeController";
+const multer = require("multer");
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+
+const upload = multer({ storage: storage });
 
 let router = express.Router();
 
@@ -23,5 +37,10 @@ export function initWebRoute(app) {
 
   router.post("/edit-user/:userId", updateUserController);
 
+  router.get("/uploadPage", uploadPageController)
+  
+  router.post("/upload/pic", upload.single('avatar'), uploadController);
+  
   return app.use("/", router);
+
 }
