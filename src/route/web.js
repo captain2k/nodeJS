@@ -1,4 +1,7 @@
+import path from "path";
 import express from "express";
+import multer from "multer";
+import appRoot from "app-root-path";
 import {
   homeController,
   detailController,
@@ -7,18 +10,20 @@ import {
   getDetailUserController,
   updateUserController,
   uploadController,
-  uploadPageController
+  uploadPageController,
 } from "../controller/homeController";
-const multer = require("multer");
 
-var storage = multer.diskStorage({
+const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './uploads')
+    cb(null, appRoot + "/src/public/image/");
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname)
-  }
-})
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
 
 const upload = multer({ storage: storage });
 
@@ -37,10 +42,9 @@ export function initWebRoute(app) {
 
   router.post("/edit-user/:userId", updateUserController);
 
-  router.get("/uploadPage", uploadPageController)
-  
-  router.post("/upload/pic", upload.single('avatar'), uploadController);
-  
-  return app.use("/", router);
+  router.get("/uploadPage", uploadPageController);
 
+  router.post("/upload/pic", upload.array("avatar"), uploadController);
+
+  return app.use("/", router);
 }

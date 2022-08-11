@@ -20,7 +20,7 @@ export async function createUserController(req, res) {
     "INSERT INTO users (firstName, lastName, email, address) VALUES (?, ?, ?, ?)",
     [firstName, lastName, email, address]
   );
- 
+
   return res.redirect("/");
 }
 
@@ -50,12 +50,16 @@ export async function updateUserController(req, res) {
   return res.redirect("/");
 }
 
-export function uploadPageController(req,res) {
-  return res.render('uploadPage.ejs')
+export function uploadPageController(req, res) {
+  return res.render("uploadPage.ejs");
 }
 
 export function uploadController(req, res) {
-  const avatarFile = req.file
-  console.log(avatarFile);
-  return res.send(`<img width=300 src='./uploads/banana.jpg' />`)
+  let imgHtml = "";
+  for (let i = 0; i < req.files.length; i++) {
+    imgHtml += `<img src="/image/${req.files[i].filename}" width="500">`;
+  }
+  return res.send(
+    `You have uploaded this image: <hr/>${imgHtml}<hr /><a href="/uploadPage">Upload another image</a>`
+  );
 }
